@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TimeLineBlog.Models;
+using Markdig;
 
 namespace TimeLineBlog.Controllers
 {
@@ -57,6 +58,14 @@ namespace TimeLineBlog.Controllers
         {
             if (ModelState.IsValid)
             {
+                // 设置时间
+                DateTime now = DateTime.Now;
+                article.CreateTime = now;
+                article.LastModifyTime = now;
+
+                // 生成 HTML
+                BuildArticle(article);
+
                 _context.Add(article);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,7 +105,10 @@ namespace TimeLineBlog.Controllers
             {
                 try
                 {
-                    _context.Update(article);
+                    // 更新修改时间
+                    article.LastModifyTime = DateTime.Now;
+                    // 重新生成 HTML
+                    BuildArticle(article);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -147,6 +159,13 @@ namespace TimeLineBlog.Controllers
         private bool ArticleExists(int id)
         {
             return _context.Article.Any(e => e.ID == id);
+        }
+
+        private void BuildArticle(Article article)
+        {
+            // 也可以做一些屏蔽词过滤的代码
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            article.HTMLContent = Markdown.ToHtml(article.MarkdownContent, pipeline);
         }
     }
 }
