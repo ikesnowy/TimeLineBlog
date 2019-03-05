@@ -17,6 +17,13 @@ namespace TimeLineBlog.Pages.Models
         public int ID { get; set; }
 
         /// <summary>
+        /// 文章标题。
+        /// </summary>
+        [StringLength(15, MinimumLength = 3)]
+        [Required]
+        public string Title { get; set; }
+
+        /// <summary>
         /// 文章的创建时间。
         /// </summary>
         [DataType(DataType.DateTime)]
