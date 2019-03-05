@@ -109,6 +109,7 @@ namespace TimeLineBlog.Controllers
                     article.LastModifyTime = DateTime.Now;
                     // 重新生成 HTML
                     BuildArticle(article);
+                    _context.Update(article);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -164,7 +165,12 @@ namespace TimeLineBlog.Controllers
         private void BuildArticle(Article article)
         {
             // 也可以做一些屏蔽词过滤的代码
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            var pipeline = new MarkdownPipelineBuilder()
+                .UseBootstrap()
+                .UseEmojiAndSmiley()
+                .UseEmphasisExtras()
+                .UseSoftlineBreakAsHardlineBreak()
+                .Build();
             article.HTMLContent = Markdown.ToHtml(article.MarkdownContent, pipeline);
         }
     }
