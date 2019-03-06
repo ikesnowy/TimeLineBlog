@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<TimeLineBlog.Models.Article>
 
 @{
-    ViewData["Title"] = "主页";
+    ViewData["Title"] = "所有文章";
 }
 
-<h1>Index</h1>
+<h1>所有文章</h1>
 
 <p>
     <a asp-action="Create">新建文章</a>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
@@ -20,12 +20,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastModifyTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MarkdownContent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PlainContent)
             </th>
             <th></th>
         </tr>
@@ -41,12 +35,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LastModifyTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MarkdownContent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlainContent)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">编辑</a> |
