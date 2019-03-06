@@ -50,5 +50,11 @@ namespace TimeLineBlog.Models
         /// </summary>
         [Display(Name = "正文内容")]
         public string HTMLContent { get; set; }
+
+        /// <summary>
+        /// 文章的纯文本内容。
+        /// </summary>
+        [Display(Name = "正文内容")]
+        public string PlainContent { get; set; }
     }
 }

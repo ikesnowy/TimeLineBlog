@@ -172,6 +172,7 @@ namespace TimeLineBlog.Controllers
                 .UseSoftlineBreakAsHardlineBreak()
                 .Build();
             article.HTMLContent = Markdown.ToHtml(article.MarkdownContent, pipeline);
+            article.PlainContent = Markdown.ToPlainText(article.MarkdownContent, pipeline);
         }
     }
 }
