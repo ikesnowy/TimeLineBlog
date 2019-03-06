@@ -4,10 +4,15 @@
     ViewData["Title"] = Model.Title;
 }
 
-<h1>@Model.Title</h1>
-
-<div>@Html.Raw(Model.HTMLContent)</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">编辑</a> |
-    <a asp-action="Index">返回文章列表</a>
+<div class="row">
+    <div class="card col-12">
+        <div class="card-body">
+            <h1 class="card-title">@Model.Title</h1>
+            <h6 class="card-subtitle text-muted">最后更新：@Model.LastModifyTime.ToLongDateString()</h6>
+            <br />
+            <div class="card-text">@Html.Raw(Model.HTMLContent)</div>
+            <a class="card-link" asp-action="Edit" asp-route-id="@Model.ID">编辑</a>
+            <a class="card-link" asp-action="Index">返回文章列表</a>
+        </div>
+    </div>
 </div>
