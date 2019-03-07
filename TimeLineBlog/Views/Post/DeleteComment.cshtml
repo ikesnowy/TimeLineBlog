@@ -25,6 +25,6 @@
     <form asp-action="DeleteComment">
         <input type="hidden" asp-for="ID" />
         <input type="submit" value="删除" class="btn btn-danger" /> |
-        <a asp-action="Index">取消</a>
+        <a asp-action="Details" asp-route-id="@Model.ArticleID">取消</a>
     </form>
 </div>
