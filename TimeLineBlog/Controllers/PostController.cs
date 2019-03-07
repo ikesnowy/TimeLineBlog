@@ -35,12 +35,20 @@ namespace TimeLineBlog.Controllers
 
             var article = await _context.Article
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (article == null)
             {
                 return NotFound();
             }
 
-            return View(article);
+            var comments = from c in _context.Comment
+                           where c.ArticleID == article.ID
+                           orderby c.CreateTime descending
+                           select c;
+
+            var post = new Post { Article = article, Comments = await comments.ToListAsync() };
+
+            return View(post);
         }
 
         // GET: Post/Create

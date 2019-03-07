@@ -38,7 +38,28 @@ namespace TimeLineBlog.Controllers
                 return NotFound();
             }
 
-            return View(article);
+            var comments = from c in _context.Comment
+                           where c.ArticleID == article.ID
+                           orderby c.CreateTime descending
+                           select c;
+
+            var post = new Post { Article = article, Comments = await comments.ToListAsync() };
+
+            return View(post);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Comment([Bind("ID, ArticleID, CreateTime, NickName, Content")] Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                comment.CreateTime = DateTime.Now;
+
+                _context.Add(comment);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(ReadArticle), new { id = comment.ArticleID });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
