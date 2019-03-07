@@ -22,7 +22,8 @@ namespace TimeLineBlog.Controllers
         // GET: Post
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Article.ToListAsync());
+            var articles = await _context.Article.OrderByDescending(m => m.CreateTime).ToListAsync();
+            return View(articles);
         }
 
         // GET: Post/Details/5
