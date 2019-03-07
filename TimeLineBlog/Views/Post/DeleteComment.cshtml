@@ -1,0 +1,30 @@
+﻿@model TimeLineBlog.Models.Comment
+
+@{
+    ViewData["Title"] = "DeleteComment";
+}
+
+<h1>确认删除评论吗？</h1>
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NickName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NickName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteComment">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="删除" class="btn btn-danger" /> |
+        <a asp-action="Index">取消</a>
+    </form>
+</div>

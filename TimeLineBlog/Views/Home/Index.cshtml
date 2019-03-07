@@ -69,7 +69,7 @@
                                 <h5 id="@nowID" class="card-title">@item.Title</h5>
                                 <h6 class="mb-2 card-subtitle text-muted">@item.CreateTime.ToLongDateString()</h6>
                                 <p class="card-text">@item.PlainContent.Substring(0, item.PlainContent.Length > 200 ? 200 : item.PlainContent.Length)</p>
-                                <a asp-action="ReadArticle" asp-route-id="@item.ID">更多……</a>
+                                <a asp-action="ReadArticle" asp-route-id="@item.ID" class="card-link">更多……</a>
                             </div>
                         </div>
                     }
