@@ -18,9 +18,14 @@ namespace TimeLineBlog.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(_context.Article.OrderByDescending(i => i.CreateTime).ToList());
+            var articles = from a 
+                           in _context.Article
+                           select a;
+            if (!string.IsNullOrEmpty(searchString))
+                articles = articles.Where(s => s.Title.Contains(searchString));
+            return View(await articles.OrderByDescending(i => i.CreateTime).ToListAsync());
         }
 
         // GET: Home/ReadArticle/5
