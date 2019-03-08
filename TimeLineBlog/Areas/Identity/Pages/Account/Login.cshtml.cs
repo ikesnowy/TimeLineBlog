@@ -44,6 +44,7 @@ namespace TimeLineBlog.Areas.Identity.Pages.Account
 
             [Required (ErrorMessage = "密码错误")]
             [DataType(DataType.Password)]
+            [Display(Name = "密码")]
             public string Password { get; set; }
 
             [Display(Name = "记住我")]
