@@ -1,0 +1,39 @@
+﻿@model TimeLineBlog.Models.Post
+
+@{
+    ViewData["Title"] = Model.Article.Title;
+}
+
+<div class="row">
+    <div class="card col-12 mb-3">
+        <div class="card-body">
+            <h1 class="card-title">@Model.Article.Title</h1>
+            <h6 class="card-subtitle text-muted">最后更新：@Model.Article.LastModifyTime.ToLongDateString()</h6>
+            <br />
+            <div class="card-text">@Html.Raw(Model.Article.HTMLContent)</div>
+            <a class="card-link" asp-action="Index">返回</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="card col-12 mb-3">
+        <div class="card-body">
+            <h4 class="card-title">添加评论</h4>
+            @await Html.PartialAsync("_AddCommentPartial", new Comment() { ArticleID = Model.Article.ID })
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="card col-12 mb-3">
+            <div class="card-body">
+                <h5 class="card-title">@comment.NickName</h5>
+                <h6 class="card-subtitle text-muted">@comment.CreateTime.ToLongDateString()</h6>
+                <p class="card-text">@comment.Content</p>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TimeLineBlog.Models.Article>
+
+@{
+    ViewData["Title"] = "所有文章";
+}
+
+<h1>所有文章</h1>
+
+<p>
+    <a asp-action="Create">新建文章</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastModifyTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModifyTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">编辑</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">查看</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">删除</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

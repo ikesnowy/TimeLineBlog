@@ -1,0 +1,79 @@
+﻿@model IEnumerable<TimeLineBlog.Models.Article>
+
+@{
+    int year = 0;
+    int month = 0;
+    string nowID = "";
+    ViewData["Title"] = "主页";
+}
+
+<script>
+    function addMonth(targetYear, targetMonth, link) {
+        var yearNav = document.getElementById(targetYear);
+        var newLink = document.createElement('a');
+        var textNode = document.createTextNode(targetMonth + ' 月');
+        newLink.className = 'nav-link ml-3 my-1';
+        newLink.setAttribute('href', link);
+        newLink.appendChild(textNode);
+        yearNav.appendChild(newLink);
+    }
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <nav id="navbar-timeline" class="position-fixed navbar navbar-light bg-light flex-column">
+                <nav class="nav nav-pills nav-fill flex-column">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.CreateTime.Year != year)
+                        {
+                            year = item.CreateTime.Year;
+                            month = item.CreateTime.Month;
+                            nowID = year + "-" + month + "-1";
+                            <a class="nav-link" href="#@nowID">@year 年</a>
+                            <nav id="@year" class="nav nav-pills flex-column">
+                                <a class="nav-link ml-3 my-1" href="#@nowID">@month 月</a>
+                            </nav>
+                        }
+                        else if (item.CreateTime.Month != month)
+                        {
+                            month = item.CreateTime.Month;
+                            nowID = year + "-" + month + "-1";
+                            <script>addMonth(@year, @month, '#@nowID');</script>
+                        }
+                    }
+                </nav>
+            </nav>
+        </div>
+        @{
+            year = 0;
+            month = 0;
+        }
+        <div class="col-10" >
+            <div>
+                @foreach (var item in Model)
+                    {
+                        if (item.CreateTime.Year != year || item.CreateTime.Month != month)
+                        {
+                            year = item.CreateTime.Year;
+                            month = item.CreateTime.Month;
+                            nowID = year + "-" + month + "-1";
+                        }
+                        else
+                        {
+                            nowID = "";
+                        }
+                        <div class="card col-12 mb-3">
+                            <div class="card-body">
+                                <h5 id="@nowID" class="card-title">@item.Title</h5>
+                                <h6 class="mb-2 card-subtitle text-muted">@item.CreateTime.ToLongDateString()</h6>
+                                <p class="card-text">@item.PlainContent.Substring(0, item.PlainContent.Length > 200 ? 200 : item.PlainContent.Length)</p>
+                                <a asp-action="ReadArticle" asp-route-id="@item.ID" class="card-link">更多……</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+        </div>
+    </div>
+</div>
